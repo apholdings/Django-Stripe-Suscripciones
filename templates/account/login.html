@@ -1,0 +1,81 @@
+{% extends 'account/base.html' %}
+{% load static %}
+{% load tailwind_tags %}
+{% load tailwind_filters %}
+{% load crispy_forms_tags %}
+{% load i18n %}
+{% load account socialaccount %}
+{% get_providers as socialaccount_providers %}
+
+{% block title %}Login{% endblock title %}
+{% block extra_head %}{% endblock extra_head %}
+
+<!-- Navbar -->
+{% block navbar %}
+
+{% endblock navbar %}
+
+<!-- Content -->
+{% block content %}
+
+
+
+
+<div class="min-h-screen bg-white dark:bg-dark-main flex">
+  <div class="flex-1 flex flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+    <div class="mx-auto w-full max-w-sm lg:w-96">
+      <div>
+        <img class="h-12 w-auto " src="{% static 'img/logo.png' %}" alt="Vudera Logo">
+        <h2 class="mt-6 text-3xl font-extrabold dark:text-dark-txt text-gray-900">
+          Accede a tu cuenta
+        </h2>
+        <p class="mt-2 text-sm text-gray-600">
+          O
+          <a href="{% url 'account_signup' %}" class="font-medium text-blue-600 hover:text-blue-500">
+            Crea una cuenta
+          </a>
+        </p>
+      </div>
+
+      <div class="">
+        <div class="bg-white dark:bg-dark-main py-8 px-4 sm:rounded-lg sm:px-10">
+          <form class="space-y-4" action="#" method="POST">
+            {% csrf_token %}
+            {{form|crispy}}
+            <div>
+            
+              <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Acceder
+              </button>
+            </div>
+
+            
+          </form>
+
+          <div class="sm:mx-auto sm:w-full sm:max-w-md">
+            <p class="mt-2 text-center text-sm text-gray-600">
+              <a href="{% url 'account_reset_password' %}" class="font-medium text-blue-600 hover:text-blue-500">
+                Olvide mi clave
+              </a>
+            </p>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hidden lg:block relative w-0 flex-1">
+    <img class="absolute inset-0 h-full w-full object-cover" src="{% static 'img/login.jpg' %}" alt="">
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Footer -->
+{% block footer %}
+
+{% endblock footer %}
+
+
+{% block javascript %}{% endblock javascript %}

@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+{% block extra_head %}{% endblock extra_head %}
+
+
+{% block navbar %}
+{% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+
+{% block content %}
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="relative bg-gray-50 pt-16 pb-20 px-4 sm:px-6 lg:pt-24 lg:pb-28 lg:px-8">
+  <div class="absolute inset-0">
+    <div class="bg-white h-1/3 sm:h-2/3"></div>
+  </div>
+  <div class="relative max-w-7xl mx-auto">
+    <div class="text-center">
+      <h2 class="text-3xl tracking-tight font-extrabold text-gray-900 sm:text-4xl">
+        Available courses
+      </h2>
+      <p class="mt-3 max-w-2xl mx-auto text-xl text-gray-500 sm:mt-4">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsa libero labore natus atque, ducimus sed.
+      </p>
+    </div>
+
+    <div class="mt-12 max-w-lg mx-auto grid gap-5 lg:grid-cols-3 lg:max-w-none">
+        {% for course in courses %}
+        <div class="flex flex-col rounded-lg shadow-lg overflow-hidden">
+        <div class="flex-shrink-0">
+            <a href="{% url 'courses:detail' course.slug %}">
+          <img class="h-48 w-full object-cover" src="{{course.thumbnail.url}}" alt="">
+            </a>
+        </div>
+        <div class="flex-1 bg-white p-6 flex flex-col justify-between">
+          <div class="flex-1">
+            <p class="text-sm font-medium text-indigo-600">
+              <a href="#" class="hover:underline">
+                Category
+              </a>
+            </p>
+
+            <a href="{% url 'courses:detail' course.slug %}" class="block mt-2">
+              <p class="text-xl font-semibold text-gray-900">
+                {{course.title}}
+              </p>
+              <p class="mt-3 text-base text-gray-500">        
+              {{course.sub_title}}
+                </p>
+            </a>
+          </div>
+          
+        </div>
+        </div>
+        {% endfor %}
+    </div>
+
+            <!--PAGINATION-->
+            <nav class="px-4 flex items-center justify-between sm:px-0">
+                {% if courses.has_previous %}
+                <div class="-mt-px w-0 flex-1 flex">
+                    <a href="?page={{ courses.previous_page_number }}" class="border-t-2 border-transparent pt-4 pr-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    <!-- Heroicon name: solid/arrow-narrow-left -->
+                    <svg class="mr-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+                    </svg>
+                    Previous
+                    </a>
+                </div>
+                {% endif %}
+                
+                {% for i in courses.paginator.page_range %}
+                    {% if courses.number == i %}        
+                    <div class="cursor-default border-indigo-500 text-indigo-600 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium" aria-current="page">
+                    {{i}}
+                    </div>
+                    {% else %}
+                    <a href="?page={{ i }}" class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 border-t-2 pt-4 px-4 inline-flex items-center text-sm font-medium">
+                    {{i}}
+                    </a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if courses.has_next %}
+                <div class="-mt-px w-0 flex-1 flex justify-end">
+                    <a href="?page={{ courses.next_page_number }}" class="border-t-2 border-transparent pt-4 pl-1 inline-flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Next
+                    <!-- Heroicon name: solid/arrow-narrow-right -->
+                    <svg class="ml-3 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    </a>
+                </div>
+                {% endif %}
+            </nav>
+            <!--/END PAGINATION-->
+
+  </div>
+</div>
+
+{% endblock content %}
+    
+
+{% block footer %}
+
+{% endblock footer %}
+
+{% block javascript %}{% endblock javascript %}

@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock title %}
+{% block extra_head %}{% endblock extra_head %}
+
+
+{% block navbar %}
+{% include 'components/navbar.html' %}
+{% endblock navbar %}
+
+
+{% block content %}
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <!-- We've used 3xl here, but feel free to try other max-widths based on your needs -->
+  <div class="max-w-3xl mx-auto">
+    
+    <div class="md:col-span-1 mt-4">
+      <h3 class="text-lg font-medium leading-6 dark:text-dark-txt text-gray-900">Estado de Suscripcion</h3>
+    </div>
+
+    {% if user.subscription.status != "canceled" %}
+    <h2 class="text-md leading-6 font-medium dark:text-dark-txt text-gray-900">Paquete Actual: <span class="font-bold"> {{ user.subscription.pricing.name }}</span></h2>
+    {% endif %}
+
+    {% if user.subscription.status == "canceled" %}
+    <span class="mt-1 text-sm dark:text-dark-txt text-gray-500">
+    Status: </span><span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-red-100 text-red-800">
+    Cancelled
+    </span>
+    {% else %}
+    <p class="mt-1 text-sm dark:text-dark-txt text-gray-500">
+    Status: <span class="inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-green-100 text-green-800">
+    {{user.subscription.status}}
+    </span>
+    </p>
+    {% endif %}
+
+    <a href="{% url 'payment:pricing' %}" class=" inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-blue-500 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+        Mejorar Suscripcion
+    </a>
+
+
+    {% if user.subscription.pricing.name != "Free Trial"  %}
+    {% if user.subscription.status != "canceled"%}
+    {% if user.subscription.pricing.name != ""  %}
+    <form method="post" class="py-3 mt-3 inline-flex float-right" action="{% url 'user:cancel-subscription' request.user.username %}">
+        {% csrf_token %}
+        {{ form }}
+        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500" type="submit">
+        Cancelar Subscripcion
+        </button>
+    </form>
+    {% endif %}
+    {% endif %}
+    {% endif %}
+    
+
+  </div>
+</div>
+
+{% endblock content %}
+    
+
+{% block footer %}
+
+{% endblock footer %}
+
+{% block javascript %}{% endblock javascript %}

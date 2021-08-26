@@ -1,0 +1,31 @@
+{% load static tailwind_tags %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% block title %}<title>Document</title>{% endblock title %}
+    {% block extra_head %}{% endblock extra_head %}
+    {% tailwind_css %}
+
+    <!--Favicon-->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/logo.png' %}">
+
+    <!--Alpine JS-->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+    <!--Boxicons-->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <!--Stripe-->
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    {% block navbar %}{% endblock navbar %}
+
+    {% include 'messages.html' %}
+    {% block content %}{% endblock content %}
+    
+    {% block footer %}{% endblock footer %}
+
+    {% block javascript %}{% endblock javascript %}
+</body>
+</html>
